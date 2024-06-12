@@ -12,6 +12,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
+import { DeleteDialog } from '@/components/panel/mueble/DeleteDialog';
 
 export default async function page() {
 	const muebles = await prisma.mueble.findMany({});
@@ -57,9 +58,10 @@ export default async function page() {
 								</Link>
 							</TableCell>
 							<TableCell className="text-right">
-								<Button variant={'destructive'}>
-									Eliminar
-								</Button>
+								<DeleteDialog
+									id={mueble.id}
+									nombre={mueble.name}
+								/>
 							</TableCell>
 						</TableRow>
 					))}

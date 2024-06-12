@@ -8,8 +8,26 @@ import prisma from './prisma';
 export async function createMueble(formData: FormData) {
 	const rawformData = Object.fromEntries(formData.entries());
 
-	const validateField = zodSchemaMueble.safeParse(rawformData);
-	console.log(validateField);
+	const createMuebleSchema = zodSchemaMueble.omit({
+		id: true,
+		createAt: true,
+	});
+	const validateField = createMuebleSchema.safeParse(rawformData);
+	if (!validateField.success) {
+		return;
+	}
+
+	await prisma.mueble.create({
+		data: {
+			name: validateField.data.name,
+			description: validateField.data.description,
+			price: validateField.data.price,
+			high: validateField.data.high,
+			broad: validateField.data.broad,
+			deep: validateField.data.deep,
+		},
+	});
+
 	revalidatePath('/panel/muebles');
 	redirect('/panel/muebles');
 }
