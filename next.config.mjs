@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+	compilerOptions: {
+		module: 'CommonJS',
+	},
+};
 
 export default nextConfig;
