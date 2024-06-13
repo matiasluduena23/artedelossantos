@@ -1,10 +1,6 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { updateMueble } from '@/lib/actions';
 import prisma from '@/lib/prisma';
 import React from 'react';
+import FormEdit from './FormEdit';
 
 export default async function page({ params }: { params: { id: string } }) {
 	const id = params.id;
@@ -13,88 +9,11 @@ export default async function page({ params }: { params: { id: string } }) {
 			id: id,
 		},
 	});
-	const updateMuebleWithId = updateMueble.bind(null, id);
 
 	return (
 		<div>
 			<h1>Editar Mueble</h1>
-			<form action={updateMuebleWithId}>
-				<div className="grid grid-cols-2 mt-8">
-					<div className="space-y-4">
-						<div className="grid w-full max-w-sm items-center gap-1.5">
-							<Label htmlFor="name">Nombre</Label>
-							<Input
-								type="text"
-								id="name"
-								name="name"
-								placeholder="Nombre"
-								required
-								defaultValue={mueble?.name}
-							/>
-						</div>
-						<div className="grid w-full max-w-sm items-center gap-1.5">
-							<Label htmlFor="price">Precio</Label>
-							<Input
-								type="number"
-								id="price"
-								name="price"
-								placeholder="Precio"
-								required
-								defaultValue={mueble?.price}
-							/>
-						</div>
-
-						<div className="grid w-full max-w-sm gap-1.5">
-							<Label htmlFor="description">Description</Label>
-							<Textarea
-								placeholder="Escriba una descripcion."
-								id="description"
-								name="description"
-								required
-								defaultValue={mueble?.description}
-							/>
-						</div>
-					</div>
-					<div className="space-y-4">
-						<div className="grid w-full max-w-sm items-center gap-1.5">
-							<Label htmlFor="high">Alto</Label>
-							<Input
-								type="number"
-								name="high"
-								id="high"
-								placeholder="Alto"
-								required
-								defaultValue={mueble?.high}
-							/>
-						</div>
-						<div className="grid w-full max-w-sm items-center gap-1.5">
-							<Label htmlFor="broad">Ancho</Label>
-							<Input
-								type="number"
-								id="broad"
-								name="broad"
-								placeholder="Ancho"
-								required
-								defaultValue={mueble?.broad}
-							/>
-						</div>
-						<div className="grid w-full max-w-sm items-center gap-1.5">
-							<Label htmlFor="deep">Profundidad</Label>
-							<Input
-								type="number"
-								id="deep"
-								name="deep"
-								placeholder="Produndidad"
-								required
-								defaultValue={mueble?.deep}
-							/>
-						</div>
-						<div className="grid w-full max-w-sm items-center gap-1.5">
-							<Button type="submit">Editar</Button>
-						</div>
-					</div>
-				</div>
-			</form>
+			<FormEdit mueble={mueble!} />
 		</div>
 	);
 }

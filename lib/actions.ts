@@ -5,57 +5,91 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import prisma from './prisma';
 
-export async function createMueble(formData: FormData) {
+export type State = {
+	errors?: {
+		id?: string[];
+		name?: string[];
+		description?: string[];
+		price?: string[];
+		high?: string[];
+		broad?: string[];
+		deep?: string[];
+		createAt?: string[];
+	};
+	message?: string;
+};
+
+export async function createMueble(prevState: State, formData: FormData) {
 	const rawformData = Object.fromEntries(formData.entries());
 
 	const createMuebleSchema = zodSchemaMueble.omit({
 		id: true,
 		createAt: true,
 	});
-	const validateField = createMuebleSchema.safeParse(rawformData);
-	if (!validateField.success) {
-		return;
+	const validatedFields = createMuebleSchema.safeParse(rawformData);
+
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: 'Faltan campos de completar',
+		};
 	}
 
-	await prisma.mueble.create({
-		data: {
-			name: validateField.data.name,
-			description: validateField.data.description,
-			price: validateField.data.price,
-			high: validateField.data.high,
-			broad: validateField.data.broad,
-			deep: validateField.data.deep,
-		},
-	});
+	try {
+		await prisma.mueble.create({
+			data: {
+				name: validatedFields.data.name,
+				description: validatedFields.data.description,
+				price: validatedFields.data.price,
+				high: validatedFields.data.high,
+				broad: validatedFields.data.broad,
+				deep: validatedFields.data.deep,
+			},
+		});
+		revalidatePath('/panel/muebles');
+	} catch (error) {
+		return { message: 'Database Error: Error al crear un mueble.', error };
+	}
 
-	revalidatePath('/panel/muebles');
 	redirect('/panel/muebles');
 }
 
-export async function updateMueble(id: string, formData: FormData) {
+export async function updateMueble(
+	id: string,
+	prevState: State,
+	formData: FormData
+) {
 	const rawformData = Object.fromEntries(formData.entries());
 	const formDatawithID = { ...rawformData, id: id };
 
 	const updateMuebleSchema = zodSchemaMueble.omit({ createAt: true });
-	const validateField = updateMuebleSchema.safeParse(formDatawithID);
+	const validatedFields = updateMuebleSchema.safeParse(formDatawithID);
 
-	if (!validateField.success) {
-		return;
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: 'Faltan campos de completar',
+		};
 	}
 
-	await prisma.mueble.update({
-		where: {
-			id: id,
-		},
-		data: {
-			name: validateField.data.name,
-			price: validateField.data.price,
-			description: validateField.data.description,
-			high: validateField.data.high,
-			broad: validateField.data.broad,
-			deep: validateField.data.deep,
-		},
-	});
+	try {
+		await prisma.mueble.update({
+			where: {
+				id: validatedFields.data.id,
+			},
+			data: {
+				name: validatedFields.data.name,
+				price: validatedFields.data.price,
+				description: validatedFields.data.description,
+				high: validatedFields.data.high,
+				broad: validatedFields.data.broad,
+				deep: validatedFields.data.deep,
+			},
+		});
+	} catch (error) {
+		return { message: 'Database Error: Error al actualizar el mueble.' };
+	}
+
 	revalidatePath('/panel/muebles');
 	redirect('/panel/muebles');
 }
