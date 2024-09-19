@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import { Button } from "./ui/button";
 import { ShoppingBagIcon } from "lucide-react";
 import { CartContext } from "./providers/CartProvider";
+import { CartPopover } from "./cart-popover";
 
 export default function Navigation() {
 	const state = useContext(CartContext)!;
@@ -23,15 +24,15 @@ export default function Navigation() {
 						<li>
 							<a href="">Contacto</a>
 						</li>
-						<Button variant={"outline"} className="relative">
+						<div className="relative">
 							{" "}
-							<ShoppingBagIcon className="text-black" />
+							<CartPopover />
 							{state.length > 0 && (
 								<span className="absolute -bottom-2 -right-2 rounded-full w-6 h-6 p-2 bg-primary text-white flex items-center justify-center">
 									{state.length}
 								</span>
 							)}
-						</Button>
+						</div>
 					</ul>
 				</nav>
 			</div>
