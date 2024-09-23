@@ -9,17 +9,12 @@ import { useContext } from "react";
 import { CartContext, DistpatchContext } from "./providers/CartProvider";
 import Image from "next/image";
 import { Separator } from "./ui/separator";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function CartPopover() {
 	const state = useContext(CartContext)!;
 	const dispatch = useContext(DistpatchContext)!;
-	const router = useRouter();
 
-	const handleClick = () => {
-		localStorage.setItem("checkout-arte", JSON.stringify(state));
-		router.push("/checkout");
-	};
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
@@ -61,11 +56,14 @@ export function CartPopover() {
 								${state.reduce((acc, prev) => acc + prev.price, 0).toFixed(2)}
 							</p>
 						</div>
-						<Button
-							className="w-full bg-black hover:bg-blac hover:opacity-70"
-							onClick={handleClick}
-						>
-							Finalizar Compra
+						<Button className="w-full bg-black hover:bg-blac hover:opacity-70">
+							<Link
+								href={{
+									pathname: "/checkout",
+								}}
+							>
+								Finalizar Compra
+							</Link>
 						</Button>
 					</div>
 				) : (

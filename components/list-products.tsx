@@ -17,6 +17,7 @@ export default function ListProducts({ products }: { products: Product[] }) {
 	const dispatch = useContext(DistpatchContext)!;
 	const state = useContext(CartContext)!;
 
+	console.log(state);
 	return (
 		<div className="container">
 			<div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8">
@@ -41,12 +42,14 @@ export default function ListProducts({ products }: { products: Product[] }) {
 							<p>${item.price.toLocaleString("es-AR")}</p>
 							<Button
 								onClick={() => {
-									state.includes(item)
+									state.find((i) => i.id === item.id)
 										? dispatch({ action: "remove", id: item.id })
 										: dispatch({ action: "addToCart", product: item });
 								}}
 							>
-								{state.includes(item) ? "Quitar del carro" : "Agregar al carro"}
+								{state.find((i) => i.id === item.id)
+									? "Quitar del carro"
+									: "Agregar al carro"}
 							</Button>
 						</CardFooter>
 					</Card>
