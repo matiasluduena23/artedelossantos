@@ -1,10 +1,12 @@
-import List from "./List";
+import { List } from "./List";
 
 export default function page() {
 	return (
-		<div>
-			<h1>Checkout</h1>
-			<List />
-		</div>
+		<main className="my-20">
+			<div className="container">
+				<h1 className="text-center text-3xl mb-12">Checkout</h1>
+				<List />
+			</div>
+		</main>
 	);
 }

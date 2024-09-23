@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/lib/definitions";
+import { Cart, Product } from "@/lib/definitions";
 import React, {
 	createContext,
 	Dispatch,
@@ -9,7 +9,7 @@ import React, {
 	useReducer,
 } from "react";
 
-export const CartContext = createContext<Product[] | null>(null);
+export const CartContext = createContext<Cart[] | null>(null);
 
 export const DistpatchContext = createContext<Dispatch<reducerAction> | null>(
 	null
@@ -35,11 +35,11 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 }
 
 type reducerAction =
-	| { action: "addToCart"; product: Product }
+	| { action: "addToCart"; product: Cart }
 	| { action: "remove"; id: number }
-	| { action: "getFromLocalStorage"; products: Product[] };
+	| { action: "getFromLocalStorage"; products: Cart[] };
 
-function reducer(stateCart: Product[], reducerAction: reducerAction) {
+function reducer(stateCart: Cart[], reducerAction: reducerAction) {
 	switch (reducerAction.action) {
 		case "addToCart": {
 			const newState = [...stateCart, reducerAction.product];
