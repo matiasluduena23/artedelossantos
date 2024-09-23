@@ -5,15 +5,19 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { ShoppingBagIcon, Trash2Icon } from "lucide-react";
-import { useContext } from "react";
-import { CartContext, DistpatchContext } from "./providers/CartProvider";
+import { Dispatch, useContext } from "react";
+import {
+	CartContext,
+	DistpatchContext,
+	reducerAction,
+} from "./providers/CartProvider";
 import Image from "next/image";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
+import { Cart } from "@/lib/definitions";
 
 export function CartPopover() {
-	const state = useContext(CartContext)!;
-	const dispatch = useContext(DistpatchContext)!;
+	const state = useContext(CartContext) as Cart[];
 
 	return (
 		<Popover>
@@ -27,26 +31,7 @@ export function CartPopover() {
 				{state.length > 0 ? (
 					<div className="space-y-2">
 						{state.map((item) => (
-							<div key={item.id} className="flex gap-4 items-center">
-								<Image
-									src={item.image}
-									alt={item.title}
-									width={30}
-									height={30}
-								/>
-								<p className="text-gray-500 text-sm">
-									{item.title.substring(0, 20)}
-								</p>
-								<div className="flex flex-col gap-2 items-end">
-									<Button
-										variant={"ghost"}
-										onClick={() => dispatch({ action: "remove", id: item.id })}
-									>
-										<Trash2Icon />
-									</Button>
-									<p className="text-gray-500">${item.price}</p>
-								</div>
-							</div>
+							<CartItem key={item.id} cart={item} />
 						))}
 						<Separator className="my-4" />
 						<div className="flex justify-between items-center font-semibold">
@@ -71,5 +56,64 @@ export function CartPopover() {
 				)}
 			</PopoverContent>
 		</Popover>
+	);
+}
+
+function CartItem({ cart }: { cart: Cart }) {
+	const dispatch = useContext(DistpatchContext) as Dispatch<reducerAction>;
+	const state = useContext(CartContext) as Cart[];
+
+	const handleDecrement = (id: number) => {
+		state.filter((i) => i.id === id)[0].cantidad > 1
+			? dispatch({
+					action: "decrement",
+					id,
+			  })
+			: dispatch({
+					action: "remove",
+					id,
+			  });
+	};
+
+	return (
+		<div className="flex gap-4 items-center">
+			<Image src={cart.image} alt={cart.title} width={30} height={30} />
+			<div className="flex flex-col items-center gap-1">
+				<p className="text-gray-500 text-[12px] text-center">
+					{cart.title.substring(0, 20)}
+				</p>
+				<div className="flex items-center gap-1 border rounded-3xl w-fit">
+					<Button
+						variant={"ghost"}
+						className="overflow-hidden block rounded-l-3xl px-3 hover:bg-slate-100"
+						onClick={() => handleDecrement(cart.id)}
+					>
+						-
+					</Button>
+					<span>{cart.cantidad}</span>
+					<Button
+						variant={"ghost"}
+						className="overflow-hidden block rounded-r-3xl px-3 hover:bg-slate-100"
+						onClick={() =>
+							dispatch({
+								action: "increment",
+								id: cart.id,
+							})
+						}
+					>
+						+
+					</Button>
+				</div>
+			</div>
+			<div className="flex flex-col gap-2 carts-end">
+				<Button
+					variant={"ghost"}
+					onClick={() => dispatch({ action: "remove", id: cart.id })}
+				>
+					<Trash2Icon />
+				</Button>
+				<p className="text-gray-500">${cart.price}</p>
+			</div>
+		</div>
 	);
 }

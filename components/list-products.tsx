@@ -1,7 +1,7 @@
 "use client";
 
-import { Product } from "@/lib/definitions";
-import React, { useContext } from "react";
+import { Cart, Product } from "@/lib/definitions";
+import React, { Dispatch, useContext } from "react";
 import {
 	Card,
 	CardContent,
@@ -11,13 +11,28 @@ import {
 } from "./ui/card";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { CartContext, DistpatchContext } from "./providers/CartProvider";
+import {
+	CartContext,
+	DistpatchContext,
+	reducerAction,
+} from "./providers/CartProvider";
 
 export default function ListProducts({ products }: { products: Product[] }) {
-	const dispatch = useContext(DistpatchContext)!;
-	const state = useContext(CartContext)!;
+	const dispatch = useContext(DistpatchContext) as Dispatch<reducerAction>;
+	const state = useContext(CartContext) as Cart[];
 
-	console.log(state);
+	const handleDecrement = (id: number) => {
+		state.filter((i) => i.id === id)[0].cantidad > 1
+			? dispatch({
+					action: "decrement",
+					id,
+			  })
+			: dispatch({
+					action: "remove",
+					id,
+			  });
+	};
+
 	return (
 		<div className="container">
 			<div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8">
@@ -40,17 +55,34 @@ export default function ListProducts({ products }: { products: Product[] }) {
 								{item.category}
 							</p>
 							<p>${item.price.toLocaleString("es-AR")}</p>
-							<Button
-								onClick={() => {
-									state.find((i) => i.id === item.id)
-										? dispatch({ action: "remove", id: item.id })
-										: dispatch({ action: "addToCart", product: item });
-								}}
-							>
-								{state.find((i) => i.id === item.id)
-									? "Quitar del carro"
-									: "Agregar al carro"}
-							</Button>
+
+							{!state.find((i) => i.id === item.id) ? (
+								<Button
+									onClick={() =>
+										dispatch({
+											action: "addToCart",
+											product: { ...item, cantidad: 1 },
+										})
+									}
+								>
+									Agregar al carro
+								</Button>
+							) : (
+								<div className="flex items-center gap-8">
+									<Button onClick={() => handleDecrement(item.id)}>-</Button>
+									<p>{state.filter((i) => i.id === item.id)[0].cantidad}</p>
+									<Button
+										onClick={() =>
+											dispatch({
+												action: "increment",
+												id: item.id,
+											})
+										}
+									>
+										+
+									</Button>
+								</div>
+							)}
 						</CardFooter>
 					</Card>
 				))}

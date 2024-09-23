@@ -34,9 +34,11 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 	);
 }
 
-type reducerAction =
+export type reducerAction =
 	| { action: "addToCart"; product: Cart }
 	| { action: "remove"; id: number }
+	| { action: "increment"; id: number }
+	| { action: "decrement"; id: number }
 	| { action: "getFromLocalStorage"; products: Cart[] };
 
 function reducer(stateCart: Cart[], reducerAction: reducerAction) {
@@ -50,6 +52,32 @@ function reducer(stateCart: Cart[], reducerAction: reducerAction) {
 		case "remove": {
 			const newState = [
 				...stateCart.filter((item) => item.id !== reducerAction.id),
+			];
+			localStorage.setItem("checkout-arte", JSON.stringify(newState));
+			return newState;
+		}
+		case "increment": {
+			const newState = [
+				...stateCart.map((item) => {
+					if (item.id === reducerAction.id) {
+						return { ...item, cantidad: item.cantidad + 1 };
+					} else {
+						return item;
+					}
+				}),
+			];
+			localStorage.setItem("checkout-arte", JSON.stringify(newState));
+			return newState;
+		}
+		case "decrement": {
+			const newState = [
+				...stateCart.map((item) => {
+					if (item.id === reducerAction.id) {
+						return { ...item, cantidad: item.cantidad - 1 };
+					} else {
+						return item;
+					}
+				}),
 			];
 			localStorage.setItem("checkout-arte", JSON.stringify(newState));
 			return newState;

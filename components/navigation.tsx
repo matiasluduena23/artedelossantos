@@ -3,9 +3,10 @@
 import React, { useContext, useEffect } from "react";
 import { CartContext } from "./providers/CartProvider";
 import { CartPopover } from "./cart-popover";
+import { Cart } from "@/lib/definitions";
 
 export default function Navigation() {
-	const state = useContext(CartContext)!;
+	const state = useContext(CartContext) as Cart[];
 
 	return (
 		<header className="bg-black text-white p-4">
