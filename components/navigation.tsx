@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
-import { Button } from "./ui/button";
-import { ShoppingBagIcon } from "lucide-react";
+import React, { useContext, useEffect } from "react";
 import { CartContext } from "./providers/CartProvider";
 import { CartPopover } from "./cart-popover";
 
