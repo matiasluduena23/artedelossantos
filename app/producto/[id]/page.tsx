@@ -16,11 +16,9 @@ export default async function page({ params }: { params: { id: string } }) {
 	return (
 		<>
 			<Navigation />
-			<section className="bg-gradient-to-r from-white from-0% to-50%  via-white via-50% bg-gray-200 min-h-screen">
-				<div className="container">
-					{product && <ProductDetails product={product} />}
-				</div>
-			</section>
+			<main className="min-h-screen">
+				{product && <ProductDetails product={product} />}
+			</main>
 		</>
 	);
 }
