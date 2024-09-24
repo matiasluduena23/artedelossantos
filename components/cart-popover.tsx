@@ -38,7 +38,10 @@ export function CartPopover() {
 							<p>Total:</p>
 							<p>
 								{" "}
-								${state.reduce((acc, prev) => acc + prev.price, 0).toFixed(2)}
+								$
+								{state
+									.reduce((acc, prev) => acc + prev.price * prev.cantidad, 0)
+									.toFixed(2)}
 							</p>
 						</div>
 						<Button className="w-full bg-black hover:bg-blac hover:opacity-70">

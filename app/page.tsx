@@ -16,11 +16,9 @@ export default async function Home() {
 
 	return (
 		<main>
-			<CartProvider>
-				<Navigation />
-				<h1 className="text-center text-3xl my-8">Arte de los santos</h1>
-				<ListProducts products={data} />
-			</CartProvider>
+			<Navigation />
+			<h1 className="text-center text-3xl my-8">Arte de los santos</h1>
+			<ListProducts products={data} />
 		</main>
 	);
 }

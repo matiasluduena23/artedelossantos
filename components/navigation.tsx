@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from "react";
 import { CartContext } from "./providers/CartProvider";
 import { CartPopover } from "./cart-popover";
 import { Cart } from "@/lib/definitions";
+import Link from "next/link";
 
 export default function Navigation() {
 	const state = useContext(CartContext) as Cart[];
@@ -15,10 +16,10 @@ export default function Navigation() {
 					<div>logo</div>
 					<ul className="flex justify-between items-center gap-8">
 						<li>
-							<a href="">Inicio</a>
+							<Link href="/">Inicio</Link>
 						</li>
 						<li>
-							<a href="">Productos</a>
+							<Link href="/">Productos</Link>
 						</li>
 						<li>
 							<a href="">Contacto</a>
