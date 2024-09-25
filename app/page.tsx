@@ -17,7 +17,7 @@ export default async function Home() {
 	return (
 		<main>
 			<Navigation />
-			<h1 className="text-center text-3xl my-8">Arte de los santos</h1>
+			<h1 className="text-center text-3xl my-8">E-commerce</h1>
 			<ListProducts products={data} />
 		</main>
 	);

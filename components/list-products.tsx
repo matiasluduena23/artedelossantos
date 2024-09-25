@@ -40,17 +40,19 @@ export default function ListProducts({ products }: { products: Product[] }) {
 			<div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8">
 				{products.map((item) => (
 					<Link key={item.id} href={`/producto/${item.id}`}>
-						<Card className="max-w[300px] max-h-[400px] cursor-pointer">
+						<Card className=" h-[380px] cursor-pointer">
 							<CardHeader>
-								<CardTitle>{item.title.substring(0, 12)}</CardTitle>
+								<CardTitle className="text-center">
+									{item.title.substring(0, 10)}
+								</CardTitle>
 							</CardHeader>
 							<CardContent>
 								<Image
 									src={item.image}
 									alt={item.title}
 									width={120}
-									height={100}
-									className="mx-auto"
+									height={200}
+									className="mx-auto w-[120px] h-[200px] object-contain"
 								/>
 							</CardContent>
 							<CardFooter className="flex flex-col gap-2 justify-start">
