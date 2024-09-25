@@ -36,7 +36,7 @@ export default function ListProducts({ products }: { products: Product[] }) {
 	};
 
 	return (
-		<div className="container">
+		<div className="container my-12">
 			<div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8">
 				{products.map((item) => (
 					<Link key={item.id} href={`/producto/${item.id}`}>
@@ -59,7 +59,7 @@ export default function ListProducts({ products }: { products: Product[] }) {
 								<p className="bg-orange-100 text-orange-700 rounded-lg px-2">
 									{item.category}
 								</p>
-								<p>${item.price.toLocaleString("es-AR")}</p>
+								<strong>${item.price.toLocaleString("es-AR")}</strong>
 							</CardFooter>
 						</Card>
 					</Link>

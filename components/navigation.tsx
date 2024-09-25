@@ -13,11 +13,11 @@ export default function Navigation() {
 		<header className="bg-black text-white p-4">
 			<div className="container">
 				<nav className="flex justify-between items-center">
-					<div>logo</div>
+					<div className="font-serif text-3xl">
+						{" "}
+						<Link href="/">EC</Link>
+					</div>
 					<ul className="flex justify-between items-center gap-8">
-						<li>
-							<Link href="/">Inicio</Link>
-						</li>
 						<li>
 							<Link href="/">Productos</Link>
 						</li>
