@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import prisma from '@/lib/prisma';
-import Link from 'next/link';
-import React from 'react';
+import { Button } from "@/components/ui/button";
+import prisma from "@/lib/prisma";
+import Link from "next/link";
+import React from "react";
 import {
 	Table,
 	TableBody,
@@ -11,8 +11,8 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@/components/ui/table';
-import { DeleteDialog } from '@/components/panel/mueble/DeleteDialog';
+} from "@/components/ui/table";
+import { DeleteDialog } from "@/components/panel/muebles/DeleteDialog";
 
 export default async function page() {
 	const muebles = await prisma.mueble.findMany({});
@@ -37,31 +37,18 @@ export default async function page() {
 				<TableBody>
 					{muebles.map((mueble) => (
 						<TableRow key={mueble.id}>
-							<TableCell className="font-medium">
-								{mueble.name}
-							</TableCell>
+							<TableCell className="font-medium">{mueble.name}</TableCell>
 							<TableCell>{mueble.price}</TableCell>
 							<TableCell>{mueble.high}</TableCell>
+							<TableCell className="text-right">{mueble.broad}</TableCell>
+							<TableCell className="text-right">{mueble.deep}</TableCell>
 							<TableCell className="text-right">
-								{mueble.broad}
-							</TableCell>
-							<TableCell className="text-right">
-								{mueble.deep}
-							</TableCell>
-							<TableCell className="text-right">
-								<Link
-									href={`/panel/muebles/${mueble.id}/editar`}
-								>
-									<Button variant={'outline'}>
-										Modificar
-									</Button>
+								<Link href={`/panel/muebles/${mueble.id}/editar`}>
+									<Button variant={"outline"}>Modificar</Button>
 								</Link>
 							</TableCell>
 							<TableCell className="text-right">
-								<DeleteDialog
-									id={mueble.id}
-									nombre={mueble.name}
-								/>
+								<DeleteDialog id={mueble.id} nombre={mueble.name} />
 							</TableCell>
 						</TableRow>
 					))}
@@ -74,7 +61,7 @@ export default async function page() {
 				</TableFooter>
 			</Table>
 			<Button>
-				<Link href={'/panel/muebles/nuevo'}>Cargar Nuevo</Link>
+				<Link href={"/panel/muebles/nuevo"}>Cargar Nuevo</Link>
 			</Button>
 		</div>
 	);

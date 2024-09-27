@@ -14,11 +14,11 @@ export default function Footer() {
 	return (
 		<footer className="bg-black text-white py-20">
 			<div className="container">
-				<div className="flex flex-col gap-12">
-					<div className="flex flex-col space-y-8">
+				<div className="flex flex-col gap-12 sm:flex-row">
+					<div className="flex flex-col space-y-8 sm:w-[50%]">
 						<div className="space-y-2">
-							<div className="font-serif text-3xl">EC</div>
-							<p>
+							<div className="font-serif text-3xl ">EC</div>
+							<p className="max-w-[400px]">
 								Puedes contactarnos por cualquiera de nuestros medios de
 								comunicacion o escribiendonos en nuestras redes.
 							</p>
@@ -49,7 +49,7 @@ export default function Footer() {
 							</Link>
 						</div>
 					</div>
-					<div className="">
+					<div className="sm:w-[50%]">
 						<MapLocation />
 					</div>
 				</div>

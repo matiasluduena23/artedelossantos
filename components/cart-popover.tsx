@@ -4,7 +4,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { ShoppingBagIcon, Trash2Icon } from "lucide-react";
+import { ShoppingCartIcon, Trash2Icon } from "lucide-react";
 import { Dispatch, useContext } from "react";
 import {
 	CartContext,
@@ -23,7 +23,7 @@ export function CartPopover() {
 		<Popover>
 			<PopoverTrigger asChild>
 				<Button variant="outline">
-					<ShoppingBagIcon className="text-black" />
+					<ShoppingCartIcon className="text-black" />
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className="w-60 mr-4">
