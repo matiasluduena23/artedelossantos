@@ -23,3 +23,5 @@ export interface Rating {
 export interface Cart extends Product {
 	cantidad: number;
 }
+
+export type ImagesT = { id: string; url: string; file: File };

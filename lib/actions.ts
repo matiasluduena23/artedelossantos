@@ -1,9 +1,9 @@
-'use server';
+"use server";
 
-import { zodSchemaMueble } from './schemas';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-import prisma from './prisma';
+import { zodSchemaMueble } from "./schemas";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import prisma from "./prisma";
 
 export type State = {
 	errors?: {
@@ -31,7 +31,7 @@ export async function createMueble(prevState: State, formData: FormData) {
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
-			message: 'Faltan campos de completar',
+			message: "Faltan campos de completar",
 		};
 	}
 
@@ -41,17 +41,18 @@ export async function createMueble(prevState: State, formData: FormData) {
 				name: validatedFields.data.name,
 				description: validatedFields.data.description,
 				price: validatedFields.data.price,
-				high: validatedFields.data.high,
-				broad: validatedFields.data.broad,
-				deep: validatedFields.data.deep,
+				alto: validatedFields.data.high,
+				ancho: validatedFields.data.broad,
+				profundo: validatedFields.data.deep,
+				images: [],
 			},
 		});
-		revalidatePath('/panel/muebles');
+		revalidatePath("/panel/muebles");
 	} catch (error) {
-		return { message: 'Database Error: Error al crear un mueble.', error };
+		return { message: "Database Error: Error al crear un mueble.", error };
 	}
 
-	redirect('/panel/muebles');
+	redirect("/panel/muebles");
 }
 
 export async function updateMueble(
@@ -68,7 +69,7 @@ export async function updateMueble(
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
-			message: 'Faltan campos de completar',
+			message: "Faltan campos de completar",
 		};
 	}
 
@@ -81,15 +82,15 @@ export async function updateMueble(
 				name: validatedFields.data.name,
 				price: validatedFields.data.price,
 				description: validatedFields.data.description,
-				high: validatedFields.data.high,
-				broad: validatedFields.data.broad,
-				deep: validatedFields.data.deep,
+				alto: validatedFields.data.high,
+				ancho: validatedFields.data.broad,
+				profundo: validatedFields.data.deep,
 			},
 		});
 	} catch (error) {
-		return { message: 'Database Error: Error al actualizar el mueble.' };
+		return { message: "Database Error: Error al actualizar el mueble." };
 	}
 
-	revalidatePath('/panel/muebles');
-	redirect('/panel/muebles');
+	revalidatePath("/panel/muebles");
+	redirect("/panel/muebles");
 }

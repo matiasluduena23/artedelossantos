@@ -1,19 +1,27 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { createMueble } from '@/lib/actions';
-import { useFormState } from 'react-dom';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { createMueble } from "@/lib/actions";
+import { FormEvent } from "react";
+import { useFormState } from "react-dom";
+import ImageUpload from "./image-upload";
 
 export default function Page() {
-	const initialState = { message: '', errors: {} };
+	const initialState = { message: "", errors: {} };
 	const [state, dispatch] = useFormState(createMueble, initialState);
+
+	const onsubmit = (e: FormEvent<HTMLFormElement>) => {
+		const formData = new FormData(e.currentTarget);
+
+		// dispatch(formData)
+	};
 	return (
 		<div>
 			<h1>Cargar Mueble</h1>
-			<form action={dispatch}>
+			<form onSubmit={onsubmit}>
 				<div className="grid grid-cols-2 mt-8 relative">
 					{state.message && (
 						<p className="absolute -top-8 left-1/3 bg-red-500 w-fit text-white px-2 rounded-sm">
@@ -31,17 +39,10 @@ export default function Page() {
 								aria-describedby="customer-error"
 								required
 							/>
-							<div
-								id="customer-error"
-								aria-live="polite"
-								aria-atomic="true"
-							>
+							<div id="customer-error" aria-live="polite" aria-atomic="true">
 								{state.errors?.name &&
 									state.errors.name.map((error: string) => (
-										<p
-											className="text-sm text-red-500"
-											key={error}
-										>
+										<p className="text-sm text-red-500" key={error}>
 											{error}
 										</p>
 									))}
@@ -57,17 +58,10 @@ export default function Page() {
 								aria-describedby="customer-error"
 								required
 							/>
-							<div
-								id="customer-error"
-								aria-live="polite"
-								aria-atomic="true"
-							>
+							<div id="customer-error" aria-live="polite" aria-atomic="true">
 								{state.errors?.price &&
 									state.errors.price.map((error: string) => (
-										<p
-											className="text-sm text-red-500"
-											key={error}
-										>
+										<p className="text-sm text-red-500" key={error}>
 											{error}
 										</p>
 									))}
@@ -83,22 +77,13 @@ export default function Page() {
 								aria-describedby="customer-error"
 								required
 							/>
-							<div
-								id="customer-error"
-								aria-live="polite"
-								aria-atomic="true"
-							>
+							<div id="customer-error" aria-live="polite" aria-atomic="true">
 								{state.errors?.description &&
-									state.errors.description.map(
-										(error: string) => (
-											<p
-												className="text-sm text-red-500"
-												key={error}
-											>
-												{error}
-											</p>
-										)
-									)}
+									state.errors.description.map((error: string) => (
+										<p className="text-sm text-red-500" key={error}>
+											{error}
+										</p>
+									))}
 							</div>
 						</div>
 					</div>
@@ -113,17 +98,10 @@ export default function Page() {
 								aria-describedby="customer-error"
 								required
 							/>
-							<div
-								id="customer-error"
-								aria-live="polite"
-								aria-atomic="true"
-							>
+							<div id="customer-error" aria-live="polite" aria-atomic="true">
 								{state.errors?.high &&
 									state.errors.high.map((error: string) => (
-										<p
-											className="text-sm text-red-500"
-											key={error}
-										>
+										<p className="text-sm text-red-500" key={error}>
 											{error}
 										</p>
 									))}
@@ -139,17 +117,10 @@ export default function Page() {
 								aria-describedby="customer-error"
 								required
 							/>
-							<div
-								id="customer-error"
-								aria-live="polite"
-								aria-atomic="true"
-							>
+							<div id="customer-error" aria-live="polite" aria-atomic="true">
 								{state.errors?.broad &&
 									state.errors.broad.map((error: string) => (
-										<p
-											className="text-sm text-red-500"
-											key={error}
-										>
+										<p className="text-sm text-red-500" key={error}>
 											{error}
 										</p>
 									))}
@@ -165,26 +136,21 @@ export default function Page() {
 								aria-describedby="customer-error"
 								required
 							/>
-							<div
-								id="customer-error"
-								aria-live="polite"
-								aria-atomic="true"
-							>
+							<div id="customer-error" aria-live="polite" aria-atomic="true">
 								{state.errors?.deep &&
 									state.errors.deep.map((error: string) => (
-										<p
-											className="text-sm text-red-500"
-											key={error}
-										>
+										<p className="text-sm text-red-500" key={error}>
 											{error}
 										</p>
 									))}
 							</div>
 						</div>
+
 						<div className="grid w-full max-w-sm items-center gap-1.5">
 							<Button type="submit">Cargar</Button>
 						</div>
 					</div>
+					<ImageUpload />
 				</div>
 			</form>
 		</div>
