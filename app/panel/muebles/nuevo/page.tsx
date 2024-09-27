@@ -5,19 +5,44 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createMueble } from "@/lib/actions";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useFormState } from "react-dom";
 import ImageUpload from "./image-upload";
+import { useUploadThing } from "@/lib/hooks/upload";
+import { ImagesT } from "@/lib/definitions";
 
 export default function Page() {
 	const initialState = { message: "", errors: {} };
 	const [state, dispatch] = useFormState(createMueble, initialState);
+	const [images, setImages] = useState<ImagesT[]>([]);
 
+	const { startUpload } = useUploadThing("imageUploader", {
+		onClientUploadComplete: (res) => {
+			console.log("uploaded successfully!", res);
+		},
+		onUploadError: (err) => {
+			console.error("error occurred while uploading", err);
+		},
+		onUploadBegin: () => {
+			console.log("upload has begun");
+		},
+	});
+
+	const handleUpload = () => {
+		if (images.length < 1) return;
+		const files = images.map((item) => item.file);
+
+		startUpload(files);
+	};
 	const onsubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
+
+		handleUpload();
 
 		// dispatch(formData)
 	};
+
 	return (
 		<div>
 			<h1>Cargar Mueble</h1>
@@ -150,7 +175,7 @@ export default function Page() {
 							<Button type="submit">Cargar</Button>
 						</div>
 					</div>
-					<ImageUpload />
+					<ImageUpload images={images} setImages={setImages} />
 				</div>
 			</form>
 		</div>
