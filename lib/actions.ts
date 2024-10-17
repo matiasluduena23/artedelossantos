@@ -11,9 +11,10 @@ export type State = {
 		name?: string[];
 		description?: string[];
 		price?: string[];
-		high?: string[];
-		broad?: string[];
-		deep?: string[];
+		alto?: string[];
+		ancho?: string[];
+		profundo?: string[];
+		images?: string[];
 		createAt?: string[];
 	};
 	message?: string;
@@ -37,15 +38,7 @@ export async function createMueble(prevState: State, formData: FormData) {
 
 	try {
 		await prisma.mueble.create({
-			data: {
-				name: validatedFields.data.name,
-				description: validatedFields.data.description,
-				price: validatedFields.data.price,
-				alto: validatedFields.data.high,
-				ancho: validatedFields.data.broad,
-				profundo: validatedFields.data.deep,
-				images: [],
-			},
+			data: validatedFields.data,
 		});
 		revalidatePath("/panel/muebles");
 	} catch (error) {
@@ -78,14 +71,7 @@ export async function updateMueble(
 			where: {
 				id: validatedFields.data.id,
 			},
-			data: {
-				name: validatedFields.data.name,
-				price: validatedFields.data.price,
-				description: validatedFields.data.description,
-				alto: validatedFields.data.high,
-				ancho: validatedFields.data.broad,
-				profundo: validatedFields.data.deep,
-			},
+			data: validatedFields.data,
 		});
 	} catch (error) {
 		return { message: "Database Error: Error al actualizar el mueble." };

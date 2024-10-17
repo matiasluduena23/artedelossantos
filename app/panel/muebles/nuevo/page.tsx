@@ -114,18 +114,18 @@ export default function Page() {
 					</div>
 					<div className="space-y-4">
 						<div className="grid w-full max-w-sm items-center gap-1.5">
-							<Label htmlFor="high">Alto</Label>
+							<Label htmlFor="alto">Alto</Label>
 							<Input
 								type="number"
-								name="high"
-								id="high"
+								name="alto"
+								id="alto"
 								placeholder="Alto"
 								aria-describedby="customer-error"
 								required
 							/>
 							<div id="customer-error" aria-live="polite" aria-atomic="true">
-								{state.errors?.high &&
-									state.errors.high.map((error: string) => (
+								{state.errors?.alto &&
+									state.errors.alto.map((error: string) => (
 										<p className="text-sm text-red-500" key={error}>
 											{error}
 										</p>
@@ -133,18 +133,18 @@ export default function Page() {
 							</div>
 						</div>
 						<div className="grid w-full max-w-sm items-center gap-1.5">
-							<Label htmlFor="broad">Ancho</Label>
+							<Label htmlFor="ancho">Ancho</Label>
 							<Input
 								type="number"
-								id="broad"
-								name="broad"
+								id="ancho"
+								name="ancho"
 								placeholder="Ancho"
 								aria-describedby="customer-error"
 								required
 							/>
 							<div id="customer-error" aria-live="polite" aria-atomic="true">
-								{state.errors?.broad &&
-									state.errors.broad.map((error: string) => (
+								{state.errors?.ancho &&
+									state.errors.ancho.map((error: string) => (
 										<p className="text-sm text-red-500" key={error}>
 											{error}
 										</p>
@@ -152,18 +152,18 @@ export default function Page() {
 							</div>
 						</div>
 						<div className="grid w-full max-w-sm items-center gap-1.5">
-							<Label htmlFor="deep">Profundidad</Label>
+							<Label htmlFor="profundo">Profundidad</Label>
 							<Input
 								type="number"
-								id="deep"
-								name="deep"
+								id="profundo"
+								name="profundo"
 								placeholder="Produndidad"
 								aria-describedby="customer-error"
 								required
 							/>
 							<div id="customer-error" aria-live="polite" aria-atomic="true">
-								{state.errors?.deep &&
-									state.errors.deep.map((error: string) => (
+								{state.errors?.profundo &&
+									state.errors.profundo.map((error: string) => (
 										<p className="text-sm text-red-500" key={error}>
 											{error}
 										</p>

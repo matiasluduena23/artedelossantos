@@ -8,9 +8,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import MapLocation from "./MapLocation";
+import dynamic from "next/dynamic";
 
 export default function Footer() {
+	const MapOnClient = dynamic(() => import("./MapLocation"), {
+		loading: () => <p>Loading...</p>,
+		ssr: false,
+	});
 	return (
 		<footer className="bg-black text-white py-20">
 			<div className="container">
@@ -50,7 +54,7 @@ export default function Footer() {
 						</div>
 					</div>
 					<div className="sm:w-[50%]">
-						<MapLocation />
+						<MapOnClient />
 					</div>
 				</div>
 			</div>

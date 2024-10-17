@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 
 export default function MapLocation() {
 	return (
@@ -11,8 +11,9 @@ export default function MapLocation() {
 				defaultZoom={15}
 				gestureHandling={"greedy"}
 				disableDefaultUI={true}
+				mapId={"b90aa121f232b8c0"}
 			>
-				<Marker position={{ lat: -31.8696203, lng: -62.7207151 }} />
+				<AdvancedMarker position={{ lat: -31.8696203, lng: -62.7207151 }} />
 			</Map>
 		</APIProvider>
 	);
