@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { createMueble } from "@/lib/actions";
+import { actionDatos, ErrorState } from "./action";
 
 export default function FormDatos() {
-	const initialState = { message: "", errors: {} };
-	const [state, dispatch] = useFormState(createMueble, initialState);
+	const initialState: ErrorState = { message: "", errors: {} };
+	const [state, dispatch] = useFormState(actionDatos, initialState);
+	console.log(state);
 	return (
 		<form action={dispatch}>
 			<div className="grid grid-cols-2 mt-8 relative">
@@ -27,7 +28,6 @@ export default function FormDatos() {
 							name="name"
 							placeholder="Nombre"
 							aria-describedby="customer-error"
-							required
 						/>
 						<div id="customer-error" aria-live="polite" aria-atomic="true">
 							{state.errors?.name &&
@@ -46,7 +46,6 @@ export default function FormDatos() {
 							name="price"
 							placeholder="Precio"
 							aria-describedby="customer-error"
-							required
 						/>
 						<div id="customer-error" aria-live="polite" aria-atomic="true">
 							{state.errors?.price &&
@@ -65,7 +64,6 @@ export default function FormDatos() {
 							id="description"
 							name="description"
 							aria-describedby="customer-error"
-							required
 						/>
 						<div id="customer-error" aria-live="polite" aria-atomic="true">
 							{state.errors?.description &&
@@ -86,7 +84,6 @@ export default function FormDatos() {
 							id="alto"
 							placeholder="Alto"
 							aria-describedby="customer-error"
-							required
 						/>
 						<div id="customer-error" aria-live="polite" aria-atomic="true">
 							{state.errors?.alto &&
@@ -105,7 +102,6 @@ export default function FormDatos() {
 							name="ancho"
 							placeholder="Ancho"
 							aria-describedby="customer-error"
-							required
 						/>
 						<div id="customer-error" aria-live="polite" aria-atomic="true">
 							{state.errors?.ancho &&
@@ -124,7 +120,6 @@ export default function FormDatos() {
 							name="profundo"
 							placeholder="Produndidad"
 							aria-describedby="customer-error"
-							required
 						/>
 						<div id="customer-error" aria-live="polite" aria-atomic="true">
 							{state.errors?.profundo &&
