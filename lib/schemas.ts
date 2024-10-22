@@ -12,6 +12,11 @@ export const zodSchemaMueble = z.object({
 	createAt: z.date(),
 });
 
+export const createMuebleSchema = zodSchemaMueble.omit({
+	id: true,
+	createAt: true,
+});
+
 export const formContextSchema = z.object({
 	name: z.string().optional(),
 	price: z.coerce.number().optional(),

@@ -5,6 +5,9 @@ import { useFormContext } from "@/lib/context/FormContext";
 import React from "react";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { cargarNuevoMueble } from "./action";
+import { CreateMuebleT } from "@/lib/definitions";
 
 export default function ViewDatos() {
 	const { newDatos } = useFormContext();
@@ -63,6 +66,14 @@ export default function ViewDatos() {
 					</div>
 				</div>
 			</CardContent>
+			<div>
+				<Button
+					onClick={async () => cargarNuevoMueble(newDatos as CreateMuebleT)}
+					className="mx-auto block mb-4"
+				>
+					Cargar
+				</Button>
+			</div>
 		</Card>
 	);
 }

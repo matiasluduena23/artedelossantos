@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { createMuebleSchema } from "./schemas";
+
 export interface Product {
 	id: number;
 	title: string;
@@ -25,3 +28,5 @@ export interface Cart extends Product {
 }
 
 export type ImagesT = { id: string; url: string; file: File };
+
+export type CreateMuebleT = z.infer<typeof createMuebleSchema>;
