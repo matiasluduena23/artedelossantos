@@ -4,6 +4,7 @@ import {
 	createContext,
 	ReactNode,
 	useCallback,
+	useContext,
 	useEffect,
 	useState,
 } from "react";
@@ -21,34 +22,36 @@ export const FormContext = createContext<FormContextT | null>(null);
 
 export default function FormProvider({ children }: { children: ReactNode }) {
 	const [newDatos, setNewDatos] = useState<DatosT>(DEFAULT_DATA_VALUES);
-	const updateDatos = useCallback((datos: Partial<DatosT>) => {
+	const [dataLoaded, setDataLoaded] = useState(false);
+	const updateDatos = (datos: Partial<DatosT>) => {
 		setNewDatos((prev) => ({ ...prev, ...datos }));
-	}, []);
+	};
 
 	useEffect(() => {
 		const data = localStorage.getItem(LOCAL_STORAGE_KEY);
-		console.log(data);
-		if (!data) {
-			console.log("posta", data);
-			setNewDatos(DEFAULT_DATA_VALUES);
-		} else {
-			// const validated = formContextSchema.safeParse(JSON.parse(data));
-			// if (validated.success) {
-			// 	setNewDatos(validated.data);
-			// } else {
-			// 	setNewDatos(DEFAULT_DATA_VALUES);
-			// }
+		if (data) {
+			setNewDatos(JSON.parse(data));
 		}
+		setDataLoaded(true);
 	}, []);
 
 	useEffect(() => {
-		console.log("first", LOCAL_STORAGE_KEY);
-		localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newDatos));
-	}, [newDatos, updateDatos]);
+		if (dataLoaded) {
+			localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newDatos));
+		}
+	}, [dataLoaded, newDatos]);
 
 	return (
 		<FormContext.Provider value={{ newDatos, updateDatos }}>
 			{children}
 		</FormContext.Provider>
 	);
+}
+
+export function useFormContext() {
+	const formContext = useContext(FormContext);
+	if (!formContext) {
+		throw new Error("Error getting the context");
+	}
+	return formContext;
 }
