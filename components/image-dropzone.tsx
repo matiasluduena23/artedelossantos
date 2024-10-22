@@ -43,7 +43,7 @@ export default function ImageDropzone({
 	return (
 		<div
 			{...getRootProps()}
-			className="bg-slate-50 p-2 rounded-lg border-dashed border-gray-400 border-2 text-sm text-center"
+			className="bg-slate-50 min-h-[200px] flex flex-col max-w-md mx-auto items-center justify-center rounded-lg border-dashed border-gray-400 border-2 text-sm text-center"
 		>
 			<input {...getInputProps()} />
 			{isDragActive ? (

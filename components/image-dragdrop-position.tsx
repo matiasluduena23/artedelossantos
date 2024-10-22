@@ -49,7 +49,7 @@ export default function ImageDragdropPosition({
 			sensors={sensors}
 		>
 			<SortableContext items={images} strategy={horizontalListSortingStrategy}>
-				<ul className="flex gap-2 mt-4">
+				<ul className="flex gap-2 mt-4 justify-center">
 					{images.map((item, index) => (
 						<ImageComponent
 							key={item.id}
