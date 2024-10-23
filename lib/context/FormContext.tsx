@@ -3,7 +3,6 @@
 import {
 	createContext,
 	ReactNode,
-	useCallback,
 	useContext,
 	useEffect,
 	useState,
@@ -16,6 +15,7 @@ export type DatosT = z.infer<typeof formContextSchema>;
 export type FormContextT = {
 	newDatos: DatosT;
 	updateDatos: (datosField: Partial<DatosT>) => void;
+	reset: () => void;
 };
 
 export const FormContext = createContext<FormContextT | null>(null);
@@ -41,8 +41,14 @@ export default function FormProvider({ children }: { children: ReactNode }) {
 		}
 	}, [dataLoaded, newDatos]);
 
+	const reset = () =>
+		localStorage.setItem(
+			LOCAL_STORAGE_KEY,
+			JSON.stringify(DEFAULT_DATA_VALUES)
+		);
+
 	return (
-		<FormContext.Provider value={{ newDatos, updateDatos }}>
+		<FormContext.Provider value={{ newDatos, updateDatos, reset }}>
 			{children}
 		</FormContext.Provider>
 	);

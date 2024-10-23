@@ -18,7 +18,7 @@ export default function FormDatos() {
 	) => {
 		updateDatos({ [e.target.name]: e.target.value });
 	};
-	console.log(newDatos);
+
 	return (
 		<form action={dispatch}>
 			<div className="grid grid-cols-2 mt-8 relative">

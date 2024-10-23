@@ -7,4 +7,5 @@ export const DEFAULT_DATA_VALUES = {
 	name: "",
 	price: 0,
 	profundo: 0,
+	images: [],
 };

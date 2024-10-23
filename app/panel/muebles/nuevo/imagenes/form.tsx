@@ -8,18 +8,20 @@ import { Button } from "@/components/ui/button";
 import { LoaderCircleIcon } from "lucide-react";
 import { useFormContext } from "@/lib/context/FormContext";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function FormImages() {
+	const router = useRouter();
 	const [images, setImages] = useState<ImagesT[]>([]);
 	const [loading, setLoading] = useState(false);
 	const { updateDatos, newDatos } = useFormContext();
 
 	const { startUpload } = useUploadThing("imageUploader", {
 		onClientUploadComplete: (res) => {
-			console.log("uploaded successfully!", res);
 			const imagePath = res.map((item) => item.url);
 			updateDatos({ images: imagePath });
 			setLoading(false);
+			router.push("/panel/muebles/nuevo/review");
 		},
 		onUploadError: (err) => {
 			console.error("error occurred while uploading", err);
@@ -56,19 +58,21 @@ export default function FormImages() {
 						))}
 					</div>
 					<Button onClick={() => updateDatos({ images: [] })}>
-						Change images
+						Quitar imagenes
 					</Button>
 				</div>
 			) : (
 				<form onSubmit={handleSubmit} className="flex justify-center flex-col ">
 					<ImageUpload images={images} setImages={setImages} />
-					<Button className="mt-8 w-fit mx-auto " disabled={loading}>
-						{loading ? (
-							<LoaderCircleIcon className="animate-spin" />
-						) : (
-							"Cargar Imagenes"
-						)}
-					</Button>
+					{images.length > 0 && (
+						<Button className="mt-8 w-fit mx-auto " disabled={loading}>
+							{loading ? (
+								<LoaderCircleIcon className="animate-spin" />
+							) : (
+								"Cargar Imagenes"
+							)}
+						</Button>
+					)}
 				</form>
 			)}
 		</div>

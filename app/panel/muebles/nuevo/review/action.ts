@@ -3,17 +3,24 @@
 import { CreateMuebleT } from "@/lib/definitions";
 import prisma from "@/lib/prisma";
 import { createMuebleSchema } from "@/lib/schemas";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
-export async function cargarNuevoMueble(data: CreateMuebleT) {
-	console.log("first");
+import { revalidatePath } from "next/cache";
+
+export type StateForm = {
+	state: "SUCCESS" | "ERROR" | "PENDING";
+	error?: string;
+};
+
+export async function cargarNuevoMueble(
+	data: CreateMuebleT,
+	state: StateForm,
+	formData: FormData
+): Promise<StateForm> {
 	const validatedFields = createMuebleSchema.safeParse(data);
 
-	console.log(validatedFields);
 	if (!validatedFields.success) {
 		return {
-			message: "Faltan campos de completar",
+			state: "ERROR",
 		};
 	}
 
@@ -22,8 +29,11 @@ export async function cargarNuevoMueble(data: CreateMuebleT) {
 			data: validatedFields.data,
 		});
 	} catch (error) {
-		return { message: "Database Error: Error al crear un mueble.", error };
+		console.log("Error creando el item", error);
+		return { state: "ERROR" };
 	}
+
 	revalidatePath("/panel/muebles");
-	redirect("/panel/muebles");
+
+	return { state: "SUCCESS" };
 }
