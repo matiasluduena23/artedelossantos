@@ -22,7 +22,7 @@ export default function Navigation() {
 							<Link href="/">Productos</Link>
 						</li>
 						<li>
-							<a href="">Contacto</a>
+							<a href="/contacto">Contacto</a>
 						</li>
 						<div className="relative">
 							{" "}
